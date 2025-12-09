@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --color-surface: #ffffff;
+  --color-ink: #05070b;
+  --color-muted: #444444;
+  --color-accent: #ed1d24;
+  --color-teal: #38a69a;
+  --color-aqua: #3d9bb5;
+  --color-page-bg: #f6f8fb;
+  --color-border: rgba(7, 23, 41, 0.08);
+  --color-border-strong: rgba(7, 23, 41, 0.16);
+  --gradient-hero: linear-gradient(135deg, #ed1d24, #3d9bb5);
+  --shadow-soft: 0 25px 45px rgba(5, 7, 11, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--color-page-bg);
+  color: var(--color-ink);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+*** End of File

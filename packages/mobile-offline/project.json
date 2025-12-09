@@ -1,0 +1,26 @@
+{
+  "name": "mobile-offline",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mobile-offline/src",
+  "projectType": "library",
+  "tags": ["scope:mobile", "type:lib"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/mobile-offline/**/*.ts", "packages/mobile-offline/**/*.tsx"]
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/mobile-offline",
+        "main": "packages/mobile-offline/src/index.ts",
+        "tsConfig": "packages/mobile-offline/tsconfig.lib.json",
+        "assets": ["packages/mobile-offline/*.md"]
+      }
+    }
+  }
+}

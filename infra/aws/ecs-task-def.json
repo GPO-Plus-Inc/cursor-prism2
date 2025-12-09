@@ -1,0 +1,37 @@
+{
+  "family": "helios-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::<account>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<account>:role/heliosApiTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "<account>.dkr.ecr.<region>.amazonaws.com/helios-api:latest",
+      "portMappings": [
+        { "containerPort": 3333, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "PORT", "value": "3333" },
+        { "name": "MONGO_URI", "value": "${ssm:/helios/mongo-uri}" },
+        { "name": "REDIS_URL", "value": "${ssm:/helios/redis-url}" },
+        { "name": "SERVICE_NAME", "value": "helios-fsm-api" }
+      ],
+      "secrets": [
+        { "name": "QB_CLIENT_SECRET", "valueFrom": "arn:aws:secretsmanager:<region>:<account>:secret:qb" },
+        { "name": "ZOHO_CLIENT_SECRET", "valueFrom": "arn:aws:secretsmanager:<region>:<account>:secret:zoho" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/helios-api",
+          "awslogs-region": "<region>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
