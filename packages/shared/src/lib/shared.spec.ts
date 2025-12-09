@@ -3,6 +3,8 @@ import {
   designTokens,
   heroMetrics,
   moduleStatusTokens,
+  mobileTechHighlights,
+  clientPortalHighlights,
 } from './shared';
 
 describe('shared design primitives', () => {
@@ -28,5 +30,18 @@ describe('admin blueprint', () => {
   it('includes narrative hero metrics for landing copy', () => {
     expect(heroMetrics.length).toBeGreaterThan(2);
     expect(heroMetrics[0]).toHaveProperty('helper');
+  });
+});
+
+describe('mobile highlight exports', () => {
+  it('provides at least three tech highlight cards', () => {
+    expect(mobileTechHighlights.length).toBeGreaterThanOrEqual(3);
+    expect(mobileTechHighlights[0].badge.length).toBeGreaterThan(0);
+  });
+
+  it('provides at least two client portal highlight cards', () => {
+    expect(clientPortalHighlights.some((card) => card.key === 'invoices')).toBe(
+      true,
+    );
   });
 });

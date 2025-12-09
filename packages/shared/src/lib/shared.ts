@@ -27,6 +27,14 @@ export type HeroMetric = {
   helper: string;
 };
 
+export type MobileHighlightCard = {
+  key: string;
+  title: string;
+  body: string;
+  badge: string;
+  tone: 'accent' | 'teal' | 'aqua' | 'neutral';
+};
+
 export const designTokens = {
   colors: {
     surface: '#FFFFFF',
@@ -197,5 +205,60 @@ export const adminBlueprint: ModuleBlueprint[] = [
       },
       { label: 'Request flow', route: '/service-requests' },
     ],
+  },
+];
+
+export const mobileTechHighlights: MobileHighlightCard[] = [
+  {
+    key: 'offline-checklists',
+    title: 'Checklist lockstep',
+    body: 'All required steps, photos, and signatures cached offline with per-item validation.',
+    badge: 'Required 8/8',
+    tone: 'accent',
+  },
+  {
+    key: 'planogram-exec',
+    title: 'Planogram companion',
+    body: 'Cell-by-cell guidance with barcode confirmation and actual quantity capture.',
+    badge: 'DSD ready',
+    tone: 'aqua',
+  },
+  {
+    key: 'inventory-sync',
+    title: 'Parts & inventory',
+    body: 'Local barcode dictionary with quick-add favorites and queued usage sync.',
+    badge: 'Scan mode',
+    tone: 'teal',
+  },
+  {
+    key: 'gps-session',
+    title: 'GPS session',
+    body: 'Foreground/background breadcrumbs for dispatch map and check-in/out proof.',
+    badge: 'Tracking on',
+    tone: 'neutral',
+  },
+];
+
+export const clientPortalHighlights: MobileHighlightCard[] = [
+  {
+    key: 'upcoming-service',
+    title: 'Next service',
+    body: 'Shows arrival window, assigned crew, and planogram/instructions per location.',
+    badge: 'Tomorrow 9:00a',
+    tone: 'aqua',
+  },
+  {
+    key: 'invoices',
+    title: 'Invoices & payments',
+    body: 'Review issued invoices, capture signatures, and pay offline with queued sync.',
+    badge: '2 open',
+    tone: 'accent',
+  },
+  {
+    key: 'reports',
+    title: 'Service reports',
+    body: 'Tap to open PDF with photos, checklist results, and planogram summary.',
+    badge: 'Latest posted',
+    tone: 'teal',
   },
 ];
