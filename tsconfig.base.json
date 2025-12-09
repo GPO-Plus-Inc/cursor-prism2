@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fsm/shared": ["packages/shared/src/index.ts"]
+      "@fsm/shared": ["packages/shared/src/index.ts"],
+      "@fsm/mobile-offline": ["packages/mobile-offline/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

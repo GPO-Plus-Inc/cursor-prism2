@@ -1,5 +1,6 @@
 const { withNxMetro } = require('@nx/react-native');
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+const { withWatermelon } = require('@nozbe/watermelondb/metro');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const { assetExts, sourceExts } = defaultConfig.resolver;
@@ -21,7 +22,9 @@ const customConfig = {
   },
 };
 
-module.exports = withNxMetro(mergeConfig(defaultConfig, customConfig), {
+const metroConfig = withWatermelon(mergeConfig(defaultConfig, customConfig));
+
+module.exports = withNxMetro(metroConfig, {
   // Change this to true to see debugging info.
   // Useful if you have issues resolving modules
   debug: false,

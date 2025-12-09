@@ -18,15 +18,24 @@
     "pnpm": ">=8.0.0"
   },
   "dependencies": {
+    "@nozbe/watermelondb": "0.27.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-community/netinfo": "11.4.1",
     "axios": "^1.6.0",
+    "bullmq": "5.12.1",
     "cors": "2.8.5",
     "dotenv": "16.4.7",
     "express": "^4.21.2",
     "helmet": "^7.2.0",
+    "ioredis": "5.4.1",
+    "mongodb": "6.9.0",
     "morgan": "^1.10.0",
+    "node-cache": "5.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "6.29.0"
+    "react-native-quick-sqlite": "8.2.7",
+    "react-router-dom": "6.29.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",

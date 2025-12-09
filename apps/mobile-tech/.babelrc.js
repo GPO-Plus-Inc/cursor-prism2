@@ -14,6 +14,7 @@ module.exports = function (api) {
           },
         ],
       ],
+      plugins: ['@nozbe/watermelondb/babel/cjs'],
     };
   }
 
@@ -21,5 +22,6 @@ module.exports = function (api) {
     presets: [
       ['module:@react-native/babel-preset', { useTransformReactJSX: true }],
     ],
+    plugins: ['@nozbe/watermelondb/babel/cjs'],
   };
 };

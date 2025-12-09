@@ -35,6 +35,7 @@ pnpm nx run mobile-tech:run-android   # Launch Android build
 pnpm nx start mobile-client   # Metro bundler for the client portal app
 pnpm nx test admin     # Run Vitest suite for the admin shell
 pnpm nx test shared    # Run Vitest suite for shared utilities
+pnpm nx test mobile-offline   # Validate shared offline package
 pnpm lint              # Nx lint target across projects
 pnpm build             # Build every project with a build target
 ```
@@ -43,10 +44,11 @@ pnpm build             # Build every project with a build target
 
 ## Next Steps
 
-1. **Mobile Offline Data** – Wire WatermelonDB/SQLite storage, sync queues, and planogram/checklist caching in `mobile-tech` and `mobile-client`.
-2. **Domain API Modules** – Flesh out Express controllers + MongoDB repositories for organizations, jobs, inventory, and exports (hooks ready in `apps/api`).
-3. **CI/CD** – Wire GitHub Actions (or preferred CI) to run `pnpm install && pnpm lint && pnpm test && pnpm build`, then deploy to AWS (ECS for API, S3+CloudFront for web, S3 for media).
-4. **Design System** – Promote the shared tokens into a component library (Storybook-ready) to keep web + RN parity.
+1. **Mobile Offline Data** – WatermelonDB/SQLite storage, sync queues, and planogram/checklist caching now live in the `@fsm/mobile-offline` package (see `docs/offline-sync.md`). Wrap any React Native screen tree with `OfflineProvider` and use `useSyncQueue` for status/enqueue helpers.
+2. **Domain API Modules** – Express API now exposes Mongo-backed repositories/services for organizations, jobs, inventory, and integration connections (`apps/api/src/modules`). Background jobs run through BullMQ (`queues/sync.queue.ts`) with a worker entrypoint.
+3. **CI/CD** – GitHub Actions workflow (`.github/workflows/ci.yml`) builds/lints/tests the monorepo. Deployment guidance + ECS task stub lives under `infra/aws`.
+4. **Integrations UI** – Admin shell includes a QuickBooks/Zoho credential panel wired to `/api/v1/integrations`. This feeds the integration connectors under `apps/api/src/integrations`.
+5. **Design System** – Promote the shared tokens into a component library (Storybook-ready) to keep web + RN parity.
 
 ## Mobile App Notes
 
@@ -59,6 +61,7 @@ pnpm build             # Build every project with a build target
 - `apps/api/src/app.ts` wires helmet, cors, logging, multi-tenant context parsing, and `/health` + `/api/v1/status` routes.
 - Configure environment via `.env` or deployment-time env vars (PORT, MONGO_URI, LOG_LEVEL, SERVICE_NAME). Defaults live in `apps/api/src/config/env.ts`.
 - Every request gains `req.orgContext` (derived from the `x-org-id` header or `orgId` query string) plus a generated `requestId` for logging/traceability.
+- Domain modules for organizations, jobs, inventory, and integrations live under `apps/api/src/modules/*`, and the BullMQ-powered worker listens via `apps/api/src/workers/export.worker.ts`.
 
 Let me know when you're ready for the next feature (mobile offline storage, database connectors, QuickBooks integrations, etc.). 
 

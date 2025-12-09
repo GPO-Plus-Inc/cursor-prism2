@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -8,6 +9,7 @@ import {
   View,
 } from 'react-native';
 
+import { OfflineProvider, useSyncQueue } from '@fsm/mobile-offline';
 import {
   appMeta,
   designTokens,
@@ -22,9 +24,20 @@ const toneColorMap = {
   neutral: designTokens.colors.neutral,
 } as const;
 
+const SyncStatusBar = () => {
+  const { pendingCount } = useSyncQueue();
+
+  return (
+    <View style={styles.syncBar}>
+      <Text style={styles.syncLabel}>Sync queue</Text>
+      <Text style={styles.syncValue}>{pendingCount}</Text>
+    </View>
+  );
+};
+
 export const App = () => {
   return (
-    <>
+    <OfflineProvider platform={Platform.OS === 'web' ? 'web' : 'native'}>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.content}>
@@ -78,6 +91,7 @@ export const App = () => {
               </View>
             ))}
           </View>
+          <SyncStatusBar />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -213,6 +227,28 @@ const styles = StyleSheet.create({
   cardBody: {
     color: designTokens.colors.neutral,
     lineHeight: 20,
+  },
+  syncBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: designTokens.colors.surface,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: designTokens.colors.borderLight,
+  },
+  syncLabel: {
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    fontSize: 11,
+    color: designTokens.colors.neutral,
+  },
+  syncValue: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: designTokens.colors.ink,
   },
 });
 

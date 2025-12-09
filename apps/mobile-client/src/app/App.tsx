@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -8,6 +9,7 @@ import {
   View,
 } from 'react-native';
 
+import { OfflineProvider, useSyncQueue } from '@fsm/mobile-offline';
 import {
   appMeta,
   clientPortalHighlights,
@@ -21,9 +23,19 @@ const toneColorMap = {
   neutral: designTokens.colors.neutral,
 } as const;
 
+const SyncStatus = () => {
+  const { pendingCount } = useSyncQueue();
+  return (
+    <View style={styles.syncCard}>
+      <Text style={styles.syncLabel}>Pending submissions</Text>
+      <Text style={styles.syncValue}>{pendingCount}</Text>
+    </View>
+  );
+};
+
 export const App = () => {
   return (
-    <>
+    <OfflineProvider platform={Platform.OS === 'web' ? 'web' : 'native'}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.content}>
@@ -70,6 +82,7 @@ export const App = () => {
             <Text style={styles.locationMeta}>Next visit · Wed 09:00 AM</Text>
             <Text style={styles.locationMeta}>Assigned crew · DSD Team 3</Text>
           </View>
+          <SyncStatus />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -194,6 +207,27 @@ const styles = StyleSheet.create({
   locationMeta: {
     color: 'rgba(255,255,255,0.8)',
     marginTop: 4,
+  },
+  syncCard: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: designTokens.colors.borderLight,
+    padding: 18,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  syncLabel: {
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    fontSize: 11,
+    color: designTokens.colors.neutral,
+  },
+  syncValue: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: designTokens.colors.ink,
   },
 });
 

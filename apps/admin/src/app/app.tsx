@@ -6,6 +6,7 @@ import {
 } from '@fsm/shared';
 
 import styles from './app.module.css';
+import { IntegrationSettings } from './components/IntegrationSettings';
 
 export function App() {
   return (
@@ -83,6 +84,8 @@ export function App() {
           })}
         </div>
       </section>
+
+      <IntegrationSettings />
     </main>
   );
 }
