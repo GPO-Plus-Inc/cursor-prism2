@@ -23,7 +23,7 @@ export const saveJob = async (job: JobRecord) => {
     {
       $set: {
         ...parsed,
-        updatedAt: new Date(parsed.updatedAt),
+        updatedAt: new Date(parsed.updatedAt).toISOString(),
       },
     },
     { upsert: true },

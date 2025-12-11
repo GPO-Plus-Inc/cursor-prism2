@@ -22,7 +22,7 @@ export const upsertInventoryItem = async (item: InventoryRecord) => {
   const collection = await getCollection<InventoryRecord>(COLLECTION);
   await collection.updateOne(
     { _id: parsed._id } as Filter<InventoryRecord>,
-    { $set: { ...parsed, updatedAt: new Date(parsed.updatedAt) } },
+    { $set: { ...parsed, updatedAt: new Date(parsed.updatedAt).toISOString() } },
     { upsert: true },
   );
   return parsed;

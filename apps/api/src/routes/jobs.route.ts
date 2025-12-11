@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { z } from 'zod';
 
 import { getDispatchBoardJobs, persistJobAndQueueSync } from '../modules/jobs/job.service';
+import { jobSchema } from '../modules/jobs/job.types';
 
 export const jobsRouter = Router();
 
@@ -18,29 +18,10 @@ jobsRouter.get('/', async (req, res, next) => {
   }
 });
 
-const upsertJobSchema = z.object({
-  _id: z.string(),
-  orgId: z.string(),
-  jobTypeId: z.string(),
-  clientId: z.string(),
-  serviceLocationId: z.string(),
-  status: z.string(),
-  priority: z.string().optional(),
-  scheduledStart: z.string().optional(),
-  scheduledEnd: z.string().optional(),
-  assignedUserIds: z.array(z.string()).optional(),
-  updatedAt: z.string(),
-});
-
 jobsRouter.post('/', async (req, res, next) => {
   try {
-    const payload = upsertJobSchema.parse(req.body);
-    const saved = await persistJobAndQueueSync({
-      ...payload,
-      checklist: req.body.checklist,
-      planogramResults: req.body.planogramResults,
-      inventoryUsage: req.body.inventoryUsage,
-    });
+    const payload = jobSchema.parse(req.body);
+    const saved = await persistJobAndQueueSync(payload);
     res.status(201).json({ job: saved });
   } catch (error) {
     next(error);
